@@ -1,0 +1,465 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <title>MSTIP | Central Tendency Calculator</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- Sidebar branding and navigation buttons for switching between pages. -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">∑</div>
+
+          <span class="brand-name">
+            <span>Makati Science</span>
+            <span>Technological Institute</span>
+            <small>of the Philippines</small>
+          </span>
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-controls="mobileMenuPanel"
+            aria-expanded="false"
+          >
+            <svg
+              class="menu-toggle-icon menu-toggle-open"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg
+              class="menu-toggle-icon menu-toggle-close"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="m6 6 12 12M18 6 6 18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+        <div class="mobile-menu-panel" id="mobileMenuPanel">
+          <div class="menu-label">MAIN MENU</div>
+
+          <nav class="nav" aria-label="Main menu">
+            <button class="active" data-page="dashboard">
+              <span class="nav-icon nav-icon-dashboard" aria-hidden="true"
+                >▦</span
+              >
+              Dashboard
+            </button>
+
+            <button data-page="calculator">
+              <span class="nav-icon">▤</span> Calculator
+            </button>
+
+            <button data-page="formulas">
+              <span class="nav-icon">♧</span> Formulas &amp; Guide
+            </button>
+
+            <button data-page="history">
+              <span class="nav-icon">◷</span> History
+            </button>
+          </nav>
+
+          <div class="sidebar-bottom">
+            <button
+              class="logout-button"
+              id="logoutBtn"
+              type="button"
+              aria-label="Log out"
+            >
+              <span class="logout-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M10 17l5-5-5-5" />
+
+                  <path d="M15 12H3" />
+
+                  <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6" />
+                </svg>
+              </span>
+
+              <span class="logout-copy"
+                ><strong>Log out</strong
+                ><small>Sign out of your account</small></span
+              >
+
+              <span class="logout-arrow" aria-hidden="true">›</span>
+            </button>
+          </div>
+        </div>
+        <!-- /mobile-menu-panel -->
+      </aside>
+
+      <!-- Main area contains the dashboard, calculator, guide, history, and settings. -->
+      <main class="main">
+        <!-- Dashboard: team member cards are filled in by script.js. -->
+        <section id="dashboard" class="page active">
+          <header class="page-head">
+            <h1>StatEase Organizational Team</h1>
+
+            <p>Bachelor of Science in Infomarmation System</p>
+          </header>
+
+          <div class="team-grid" id="teamGrid"></div>
+        </section>
+
+        <!-- CALCULATOR -->
+
+        <!-- Calculator: enter data here and view the calculated results below. -->
+        <section id="calculator" class="page">
+          <header class="page-head">
+            <h1>Central Tendency Calculator</h1>
+
+            <p>Enter your data set to calculate the mean, median, and mode.</p>
+          </header>
+
+          <div class="panel">
+            <h2>Enter your data</h2>
+
+            <div class="field">
+              <label for="dataInput">Data values</label>
+
+              <textarea
+                id="dataInput"
+                placeholder="Example: 5, 8, 8, 10, 12"
+              ></textarea>
+
+              <div class="hint">
+                Separate numbers using commas, spaces, or new lines.
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="dataType">Data type</label>
+
+                <select id="dataType">
+                  <option value="ungrouped">Ungrouped data</option>
+
+                  <option value="frequency">
+                    Frequency table (value and frequency)
+                  </option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="rounding">Decimal places</label>
+
+                <select id="rounding">
+                  <option value="2">2 decimal places</option>
+
+                  <option value="0">Whole number</option>
+
+                  <option value="1">1 decimal place</option>
+
+                  <option value="3">3 decimal places</option>
+
+                  <option value="4">4 decimal places</option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              id="frequencyHelp"
+              class="hint"
+              style="display: none; margin-bottom: 15px"
+            >
+              For frequency data, enter one value per line as
+              <b>value,frequency</b>. Example: 5,2
+            </div>
+
+            <button class="btn" id="calculateBtn">Calculate results</button>
+
+            <button class="btn secondary" id="clearBtn" type="button">
+              Clear
+            </button>
+
+            <p id="errorMessage" style="color: #b02d5f; font-size: 13px"></p>
+          </div>
+
+          <div id="resultSection" style="display: none">
+            <div class="panel">
+              <h2>Your results</h2>
+
+              <div class="results" id="results"></div>
+            </div>
+
+            <div class="panel">
+              <h2>Sorted data</h2>
+
+              <p
+                id="sortedData"
+                style="font-size: 14px; overflow-wrap: anywhere"
+              ></p>
+
+              <h2 style="margin-top: 22px">Solution</h2>
+
+              <div
+                id="solution"
+                style="font-size: 14px; line-height: 1.8"
+              ></div>
+            </div>
+
+            <div class="panel">
+              <h2>Frequency table</h2>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Value</th>
+
+                      <th>Frequency</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="frequencyTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Formulas and guide: explanations for mean, median, and mode. -->
+        <section id="formulas" class="page">
+          <header class="page-head">
+            <h1>Formulas &amp; Guide</h1>
+
+            <p>Quick explanations to help you understand each measure.</p>
+          </header>
+
+          <div class="formula-list">
+            <div class="formula formula-poster">
+              <div class="formula-poster-title">Mean Formula</div>
+              <div
+                class="formula-poster-equation mean-equation"
+                aria-label="x bar equals the sum from i equals 1 to n of x sub i divided by n"
+              >
+                <span class="math-symbol x-bar">x̄</span>
+                <span class="math-equals">=</span>
+                <span class="math-fraction">
+                  <span class="math-numerator"
+                    ><span class="sigma-wrap"
+                      ><span class="sigma">Σ</span
+                      ><span class="sigma-limits"
+                        ><sup>n</sup><sub>i=1</sub></span
+                      ></span
+                    ><span class="sum-x">x<sub>i</sub></span></span
+                  >
+                  <span class="fraction-rule"></span>
+                  <span class="math-denominator">n</span>
+                </span>
+              </div>
+              <div class="formula-poster-caption">
+                Add all values, then divide by the number of values.
+              </div>
+              <div class="formula-poster-note">Mean = Σxᵢ / n</div>
+            </div>
+
+            <div class="formula formula-poster median-poster">
+              <div class="formula-poster-title">Median Formula</div>
+              <div
+                class="formula-poster-equation median-equation"
+                aria-label="If n is odd, the median is the value at position (n plus 1) divided by 2. If n is even, the median is the average of the values at positions n divided by 2 and n divided by 2 plus 1."
+              >
+                <div class="median-case">
+                  <div class="case-label">if <i>n</i> is odd,</div>
+                  <div class="median-math">
+                    <i>median</i> =
+                    <span class="median-position">
+                      <span class="median-paren">(</span>
+                      <span class="small-fraction"
+                        ><span><i>n</i> + 1</span
+                        ><span class="fraction-rule"></span><span>2</span></span
+                      >
+                      <span class="median-paren">)</span><sup>th</sup>
+                    </span>
+                  </div>
+                </div>
+                <div class="median-case">
+                  <div class="case-label">if <i>n</i> is even,</div>
+                  <div class="median-math">
+                    <i>median</i> =
+                    <span class="median-even-fraction">
+                      <span class="median-even-numerator">
+                        <span class="median-position"
+                          ><span class="median-paren">(</span
+                          ><span class="small-fraction"
+                            ><span><i>n</i></span
+                            ><span class="fraction-rule"></span
+                            ><span>2</span></span
+                          ><span class="median-paren">)</span
+                          ><sup>th</sup></span
+                        >
+                        <span>+</span>
+                        <span class="median-position"
+                          ><span class="median-paren">(</span
+                          ><span class="small-fraction"
+                            ><span><i>n</i></span
+                            ><span class="fraction-rule"></span
+                            ><span>2</span></span
+                          ><span> + 1</span><span class="median-paren">)</span
+                          ><sup>th</sup></span
+                        >
+                      </span>
+                      <span class="fraction-rule"></span>
+                      <span style="text-align: center; padding-top: 5px"
+                        >2</span
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="median-definition">
+                  <span><i>n</i> = number of terms</span
+                  ><span><i>th</i> = position in the ordered data</span>
+                </div>
+              </div>
+              <div class="formula-poster-caption">
+                Arrange values from smallest to largest before finding the
+                middle.
+              </div>
+            </div>
+
+            <div class="formula formula-poster">
+              <div class="formula-poster-title">Mode Formula</div>
+              <div
+                class="formula-poster-equation mode-equation"
+                aria-label="Mode equals the value with the highest frequency"
+              >
+                <span class="mode-symbol"><i>M</i><sub>o</sub></span>
+                <span class="math-equals">=</span>
+                <span class="mode-definition"
+                  >value with the<br />highest frequency</span
+                >
+              </div>
+              <div class="formula-poster-caption">
+                Choose the value that appears most often in the data set.
+              </div>
+              <div class="formula-poster-note">
+                A data set may have one mode, multiple modes, or no mode.
+              </div>
+            </div>
+
+            <div class="formula">
+              <h3>How to use StatEase</h3>
+
+              <p>
+                1. Open Calculator.<br />
+
+                2. Type your data values.<br />
+
+                3. Choose the data type and decimal places.<br />
+
+                4. Select Calculate results.<br />
+
+                5. Read the results and solution below.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- HISTORY -->
+
+        <!-- History: previous calculations are displayed here. -->
+        <section id="history" class="page">
+          <header class="page-head">
+            <h1>Calculation History</h1>
+
+            <p>
+              Your recent calculations are saved in this browser and remain
+              after reload.
+            </p>
+          </header>
+
+          <div class="panel">
+            <div id="historyList" class="history-empty">
+              No calculations yet. Complete a calculation to see it here.
+            </div>
+
+            <button
+              class="btn secondary"
+              id="clearHistoryBtn"
+              style="margin-top: 14px"
+            >
+              Clear history
+            </button>
+          </div>
+        </section>
+
+        <!-- Settings: control which result details are shown. -->
+        <section id="settings" class="page">
+          <header class="page-head">
+            <h1>Settings</h1>
+
+            <p>Personalize your StatEase experience.</p>
+          </header>
+
+          <div class="panel">
+            <div class="setting-row">
+              <div>
+                <b>Show solution steps</b>
+
+                <p>Show the calculation explanation with each result.</p>
+              </div>
+
+              <input id="showSolutionSetting" type="checkbox" checked />
+            </div>
+
+            <div class="setting-row">
+              <div>
+                <b>Show frequency table</b>
+
+                <p>Display each unique value and its frequency.</p>
+              </div>
+
+              <input id="showFrequencySetting" type="checkbox" checked />
+            </div>
+
+            <div class="setting-row">
+              <div>
+                <b>Team profile labels</b>
+
+                <p>Change the member names in the code.</p>
+              </div>
+
+              <button class="btn secondary" id="editTeamBtn">Edit team</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Loads the page behavior and calculator logic after the HTML is ready. -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
